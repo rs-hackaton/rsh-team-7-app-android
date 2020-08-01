@@ -3,7 +3,12 @@ package com.example.rsh_team_7_app.room
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.ActionBarContainer
+import androidx.appcompat.widget.ActionBarContextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.rsh_team_7_app.R
 import com.example.rsh_team_7_app.room.adapter.OnCheckboxClickListener
@@ -18,15 +23,21 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room)
 
-        val title = findViewById<TextView>(R.id.name_room)
-        title.text = "Test 1000"
+        val intent = intent
+        val nameRoom = intent.getStringExtra(getString(R.string.room_name))
+        if (nameRoom == null){
+            Toast.makeText(this, "Сan't enter the room", Toast.LENGTH_SHORT).show()
+            onBackPressed()
+        }else{
+           title = nameRoom
+        }
 
         recycler_view.apply {
             adapter = itemAdapter
             layoutManager = LinearLayoutManager(this@RoomActivity)
         }
 
-        mPresenter.addString()
+        mPresenter.addString(nameRoom!!)
     }
 
     override fun onItemClick(item: String, position: Int) {

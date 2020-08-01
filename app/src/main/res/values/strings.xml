@@ -4,4 +4,6 @@
     <string name="room_name">Room name:</string>
     <string name="create_new_room">Create new room</string>
     <string name="name_room">Name Room</string>
+    <string name="message">Message</string>
+    <string name="next_activity">Next activity</string>
 </resources>
