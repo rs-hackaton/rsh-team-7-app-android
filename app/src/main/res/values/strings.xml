@@ -7,4 +7,6 @@
     <string name="message">Message</string>
     <string name="next_activity">Next activity</string>
     <string name="login_account">ACCOUNT</string>
+    <string name="add_message">Add message</string>
+    <string name="copy_id_room">Copy id room</string>
 </resources>
