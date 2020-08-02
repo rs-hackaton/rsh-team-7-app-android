@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/message_room"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Message"
+        android:text="@string/message"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/checkbox_button_room"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,10 +21,10 @@
         android:id="@+id/checkbox_button_room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#00000000"
         app:layout_constraintBottom_toBottomOf="@+id/message_room"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/message_room"
         app:srcCompat="@android:drawable/checkbox_off_background" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

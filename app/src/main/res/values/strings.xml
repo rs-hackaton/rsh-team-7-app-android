@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">rsh-team-7-app</string>
     <string name="choose_room">Choose Room</string>
-    <string name="room_name">Room name:</string>
+    <string name="room_id">RoomId:</string>
     <string name="create_new_room">Create new room</string>
     <string name="name_room">Name Room</string>
+    <string name="message">Message</string>
+    <string name="next_activity">Next activity</string>
+    <string name="login_account">ACCOUNT</string>
 </resources>

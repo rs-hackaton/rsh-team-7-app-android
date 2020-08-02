@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="210dp"
-        android:text="@string/room_name"
+        android:text="@string/room_id"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/enterNameRoomEditText"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,30 +28,32 @@
         android:hint="@string/name_room"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/enterNameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="210dp"
+        android:layout_marginEnd="32dp"
         android:background="#00000000"
-        app:layout_constraintBottom_toBottomOf="@+id/enterNameRoomEditText"
-        app:layout_constraintEnd_toEndOf="@+id/enterNameRoomEditText"
-        app:layout_constraintTop_toTopOf="@+id/enterNameRoomEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_radio_button_arrow_unchecked_24" />
 
     <TextView
         android:id="@+id/createNewRoomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
+        android:layout_marginBottom="32dp"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/create_new_room"
         android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enterNameRoomEditText" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 
