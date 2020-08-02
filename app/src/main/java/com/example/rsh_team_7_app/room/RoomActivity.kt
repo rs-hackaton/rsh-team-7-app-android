@@ -24,20 +24,20 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
         setContentView(R.layout.activity_room)
 
         val intent = intent
-        val nameRoom = intent.getStringExtra(getString(R.string.room_name))
-        if (nameRoom == null){
+        val nameRoom = intent.getStringExtra(getString(R.string.room_id))
+        /*if (nameRoom == null){
             Toast.makeText(this, "Сan't enter the room", Toast.LENGTH_SHORT).show()
             onBackPressed()
         }else{
            title = nameRoom
-        }
+        }*/
 
         recycler_view.apply {
             adapter = itemAdapter
             layoutManager = LinearLayoutManager(this@RoomActivity)
         }
 
-        mPresenter.addString(nameRoom!!)
+     //   mPresenter.addString(nameRoom)
     }
 
     override fun onItemClick(item: String, position: Int) {

@@ -50,10 +50,10 @@ class CreateAndLogInRoom(private val context: Context) {
             } else {
                 roomMap.put(nameRoomEditText.text.toString().trim(), mutableListOf())
                 val intent = Intent(context, RoomActivity::class.java)
-                intent.putExtra(
-                    context.getString(R.string.room_name),
+                /*intent.putExtra(
+                    context.getString(R.string.room_id),
                     nameRoomEditText.text.toString().trim()
-                )
+                )*/
                 context.startActivity(intent)
             }
         }
@@ -70,10 +70,10 @@ class CreateAndLogInRoom(private val context: Context) {
                     Toast.makeText(context, "Room not found", Toast.LENGTH_SHORT).show()
                 } else {
                     val intent = Intent(context, RoomActivity::class.java)
-                    intent.putExtra(
-                        context.getString(R.string.room_name),
+                    /*intent.putExtra(
+                        context.getString(R.string.room_id),
                         enterNameRoomEditText.text.toString().trim()
-                    )
+                    )*/
                     context.startActivity(intent)
                 }
             }
