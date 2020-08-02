@@ -1,9 +1,8 @@
 package com.example.rsh_team_7_app.room
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import androidx.appcompat.app.AlertDialog
 import com.example.rsh_team_7_app.R
 import kotlinx.android.synthetic.main.activity_choose_room.*
 

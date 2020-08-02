@@ -19,7 +19,7 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
         setContentView(R.layout.activity_room)
 
         val title = findViewById<TextView>(R.id.name_room)
-        title.text = "Test 1000"
+        title.text = intent.extras?.getString("name_room")
 
         recycler_view.apply {
             adapter = itemAdapter

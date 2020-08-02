@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "971018883115",
+    "firebase_url": "https://word-stack-650e6.firebaseio.com",
+    "project_id": "word-stack-650e6",
+    "storage_bucket": "word-stack-650e6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971018883115:android:90e01652b5df011ebfda6e",
+        "android_client_info": {
+          "package_name": "com.example.rsh_team_7_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971018883115-sleoqk11gmq9nanr5airm1jqebvnbu3m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.rsh_team_7_app",
+            "certificate_hash": "cf2a6c88289a05dd733d609a8bf684cd62ef396a"
+          }
+        },
+        {
+          "client_id": "971018883115-6g7ls9s52asadmjijp0shijf6k1mn6fn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvj2lTTqx-TjpRRqIWo3PWigegr-4wnAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971018883115-6g7ls9s52asadmjijp0shijf6k1mn6fn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "971018883115-8gb3c2g6g9769krvg1182c0u0j7al3ap.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.rsschool"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
