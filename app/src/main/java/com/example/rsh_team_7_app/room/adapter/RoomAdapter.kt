@@ -1,16 +1,14 @@
 package com.example.rsh_team_7_app.room.adapter
 
-import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rsh_team_7_app.R
-import com.example.rsh_team_7_app.room.data.DataMessage
+import com.example.rsh_team_7_app.room.data.Topic
 
 class RoomAdapter(
     private val mOnNoteListener: OnCheckboxClickListener
@@ -22,17 +20,17 @@ class RoomAdapter(
         var onCheckBox: OnCheckboxClickListener
     ) : RecyclerView.ViewHolder(view) {
         val messageRoomTextView: TextView = view.findViewById(R.id.message_room)
-        private val checkboxRoom :CheckBox = view.findViewById(R.id.checkbox_room)
+        val checkboxRoom :CheckBox = view.findViewById(R.id.checkbox_room)
 
         init {
             checkboxRoom.setOnClickListener {
-                onCheckBox.onItemClick(adapterPosition,checkboxRoom.isChecked)
+                onCheckBox.onItemClick(adapterPosition, checkboxRoom.isChecked, items[adapterPosition].title)
                 Log.d("onClick", "$adapterPosition --- ${checkboxRoom.isChecked}")
             }
         }
     }
 
-    private var items = listOf<DataMessage>()
+    private var items = listOf<Topic>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_room,parent,false)
@@ -46,10 +44,11 @@ class RoomAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val message = items[position]
         //Log.d("onBindViewHolder", "onBindViewHolder: $message ")
-        holder.messageRoomTextView.text = message.message
+        holder.messageRoomTextView.text = message.title
+        holder.checkboxRoom.isChecked = message.active
     }
 
-    fun addMessage(newItems: List<DataMessage>) {
+    fun addMessage(newItems: List<Topic>) {
         items = newItems
         notifyDataSetChanged()
     }
@@ -57,5 +56,5 @@ class RoomAdapter(
 }
 
 interface OnCheckboxClickListener {
-    fun onItemClick(position: Int,isChecked:Boolean)
+    fun onItemClick(position: Int, isChecked:Boolean, name: String)
 }
