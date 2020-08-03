@@ -1,6 +1,5 @@
 package com.example.rsh_team_7_app.room
 
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -189,25 +188,11 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
                     }
                 }
 
-
                 override fun onCancelled(error: DatabaseError) {
                     // Failed to read value
                     Log.w("getRoomFromDB", "Failed to read value.", error.toException())
                 }
             })
         }
-//        withContext(Dispatchers.IO) {
-//            db.getReference("topics").chi()
-//
-//                .child(roomID)
-//                .child("active")
-//                .setValue(active)
-//                .addOnSuccessListener {
-//                    Log.d("updateTopicActive", active.toString())
-//                }
-//                .addOnFailureListener { e ->
-//                    Log.w("updateTopicActive", "Error adding document", e)
-//                }
-//        }
     }
 }
