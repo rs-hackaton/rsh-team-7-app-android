@@ -20,10 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class CreateAndLogInRoom(private val context: Context) {
 
@@ -39,15 +35,7 @@ class CreateAndLogInRoom(private val context: Context) {
 
         val nameRoomEditText = view.findViewById<EditText>(R.id.nameRoomEditText)
         roomName = nameRoomEditText.text.toString()
-        val time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-            current.format(formatter)
-        } else {
-            val date = Date()
-            val formatter = SimpleDateFormat("HH:mma")
-            formatter.format(date)
-        }
+        val time = System.currentTimeMillis()
 
         alertDialogBuilderUserInput.setCancelable(false)
             .setPositiveButton("Create") { _, _ -> }

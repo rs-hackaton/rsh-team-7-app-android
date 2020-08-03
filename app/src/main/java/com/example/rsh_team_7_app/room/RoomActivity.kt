@@ -28,10 +28,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
 
@@ -88,15 +84,7 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
             .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         val alertDialog = alertDialogBuilderUserInput.create()
         alertDialog.show()
-        val time = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val current = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
-            current.format(formatter)
-        } else {
-            val date = Date()
-            val formatter = SimpleDateFormat("HH:mma")
-            formatter.format(date)
-        }
+        val time = System.currentTimeMillis()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             when {
                 TextUtils.isEmpty(messageEditText.text) -> {
@@ -116,7 +104,18 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
     }
 
     private fun copyIdRoom() {
-        //TODO
+        val layoutInflaterAndroid: LayoutInflater = LayoutInflater.from(this)
+        val view = layoutInflaterAndroid.inflate(R.layout.layout_alert_copy_id, null)
+        val alertDialogBuilderUserInput: AlertDialog.Builder = AlertDialog.Builder(this)
+        alertDialogBuilderUserInput.setView(view)
+
+        val idRoomTextView = view.findViewById<TextView>(R.id.idRoomTextView)
+        idRoomTextView.text = roomID
+
+        alertDialogBuilderUserInput.setCancelable(false)
+            .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
+        val alertDialog = alertDialogBuilderUserInput.create()
+        alertDialog.show()
     }
 
     override fun onItemClick( position: Int, isChecked: Boolean, name: String) {
@@ -136,7 +135,7 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
                 val message = topics.map {
                     Topic(
                         it.child("roomId").value as String,
-                        it.child("time").value as String,
+                        it.child("time").value as Long,
                         it.child("title").value as String,
                         it.child("userId").value as String,
                         it.child("order").value as Long,
@@ -159,7 +158,7 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
 
     private suspend fun addMessageToDB(topic: Topic) {
         val messageId = (1..20)
-            .map { _ -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map { kotlin.random.Random.nextInt(0, charPool.size) }
             .map(charPool::get)
             .joinToString("")
         withContext(Dispatchers.IO) {
