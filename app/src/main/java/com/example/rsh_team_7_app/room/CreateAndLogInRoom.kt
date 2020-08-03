@@ -1,22 +1,31 @@
 package com.example.rsh_team_7_app.room
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.rsh_team_7_app.R
-import com.example.rsh_team_7_app.room.data.roomMap
+import com.example.rsh_team_7_app.room.data.Room
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CreateAndLogInRoom(private val context: Context) {
+
+    private val db = Firebase.database
+    private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+    private lateinit var roomName: String
 
     fun createRoom() {
         val layoutInflaterAndroid: LayoutInflater = LayoutInflater.from(context.applicationContext)
@@ -25,6 +34,8 @@ class CreateAndLogInRoom(private val context: Context) {
         alertDialogBuilderUserInput.setView(view)
 
         val nameRoomEditText = view.findViewById<EditText>(R.id.nameRoomEditText)
+        roomName = nameRoomEditText.text.toString()
+        val time = System.currentTimeMillis()
 
         alertDialogBuilderUserInput.setCancelable(false)
             .setPositiveButton("Create") { _, _ -> }
@@ -42,19 +53,12 @@ class CreateAndLogInRoom(private val context: Context) {
                 }
                 else -> {
                     alertDialog.dismiss()
+                    val room = Room(nameRoomEditText.text.toString(), time, "User ID")
+                    val job = GlobalScope.launch(Dispatchers.IO) {
+                        addRoomToDB(room, nameRoomEditText.text.toString())
+                    }
+                    job.start()
                 }
-            }
-            if (roomMap.containsKey(nameRoomEditText.text.toString().trim())) {
-                Toast.makeText(context, "The room has already been created", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                roomMap.put(nameRoomEditText.text.toString().trim(), mutableListOf())
-                val intent = Intent(context, RoomActivity::class.java)
-                /*intent.putExtra(
-                    context.getString(R.string.room_id),
-                    nameRoomEditText.text.toString().trim()
-                )*/
-                context.startActivity(intent)
             }
         }
     }
@@ -65,19 +69,55 @@ class CreateAndLogInRoom(private val context: Context) {
                 Toast.makeText(context, "Please enter name room", Toast.LENGTH_SHORT).show()
             }
             else -> {
-                val list = roomMap[enterNameRoomEditText.text.toString().trim()]
-                if (list == null) {
-                    Toast.makeText(context, "Room not found", Toast.LENGTH_SHORT).show()
-                } else {
-                    val intent = Intent(context, RoomActivity::class.java)
-                    /*intent.putExtra(
-                        context.getString(R.string.room_id),
-                        enterNameRoomEditText.text.toString().trim()
-                    )*/
-                    context.startActivity(intent)
+                val job = GlobalScope.launch(Dispatchers.IO) {
+                    getRoomFromDB(enterNameRoomEditText.text.toString())
                 }
+                job.start()
             }
         }
     }
 
+    private suspend fun addRoomToDB (room: Room, name: String) {
+        val roomId = (1..20)
+            .map { _ -> kotlin.random.Random.nextInt(0, charPool.size) }
+            .map(charPool::get)
+            .joinToString("")
+        withContext(Dispatchers.IO) {
+            val myRef = db.getReference("rooms").child(roomId)
+            myRef.setValue(room)
+                .addOnSuccessListener {
+                    goToRoomActivity(name, roomId)
+                }
+                .addOnFailureListener { e ->
+                    Log.w("addRoomToDB", "Error adding document", e)
+                }
+        }
+    }
+
+    private fun goToRoomActivity(name: String, roomId: String) {
+        val intent = Intent(context, RoomActivity::class.java)
+        intent.putExtra("nameRoom", name)
+        intent.putExtra("nameId", roomId)
+        context.startActivity(intent)
+    }
+
+    private suspend fun getRoomFromDB(roomId: String){
+        withContext(Dispatchers.IO) {
+            val myRef = db.getReference("rooms").child(roomId)
+            myRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        goToRoomActivity(dataSnapshot.child("title").value as String, roomId)
+                    } else {
+                       Toast.makeText(context, "Room not found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Failed to read value
+                    Log.w("getRoomFromDB", "Failed to read value.", error.toException())
+                }
+            })
+        }
+    }
 }
