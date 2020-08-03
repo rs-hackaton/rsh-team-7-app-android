@@ -83,7 +83,7 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
             .setNegativeButton("Cancel") { dialog, _ -> dialog.cancel() }
         val alertDialog = alertDialogBuilderUserInput.create()
         alertDialog.show()
-        val time = System.currentTimeMillis()
+        val time = System.currentTimeMillis().toString()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             when {
                 TextUtils.isEmpty(messageEditText.text) -> {
@@ -134,7 +134,7 @@ class RoomActivity: AppCompatActivity(), OnCheckboxClickListener {
                 val message = topics.map {
                     Topic(
                         it.child("roomId").value as String,
-                        it.child("time").value as Long,
+                        it.child("time").value as String,
                         it.child("title").value as String,
                         it.child("userId").value as String,
                         it.child("order").value as Long,

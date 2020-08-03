@@ -35,7 +35,7 @@ class CreateAndLogInRoom(private val context: Context) {
 
         val nameRoomEditText = view.findViewById<EditText>(R.id.nameRoomEditText)
         roomName = nameRoomEditText.text.toString()
-        val time = System.currentTimeMillis()
+        val time = System.currentTimeMillis().toString()
 
         alertDialogBuilderUserInput.setCancelable(false)
             .setPositiveButton("Create") { _, _ -> }
